@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: fruit-shop
+vaadin:
+  launch-browser: true
