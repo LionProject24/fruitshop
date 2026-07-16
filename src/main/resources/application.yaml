@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: FruitShopApp
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/fruitshopapp
+    username: fruit
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
