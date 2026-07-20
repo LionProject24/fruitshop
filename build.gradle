@@ -24,25 +24,27 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-authorization-server'
-    implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-    developmentOnly 'com.vaadin:vaadin-dev'
-    implementation 'com.vaadin:vaadin-spring-boot-starter'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'    // DB 연동
+    implementation 'org.springframework.boot:spring-boot-starter-security'   // 로그인/인증
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // 입력값 검증
+    implementation 'org.springframework.boot:spring-boot-starter-web'        // REST API
+
+    compileOnly 'org.projectlombok:lombok'           // getter/setter 자동생성
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-authorization-server-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'   // MySQL 드라이버
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'  // Swagger 문서
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'   // JWT 토큰
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testCompileOnly 'org.projectlombok:lombok'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {
