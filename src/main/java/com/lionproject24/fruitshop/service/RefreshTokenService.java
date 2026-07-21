@@ -4,7 +4,7 @@ import com.lionproject24.fruitshop.entity.RefreshToken;
 import com.lionproject24.fruitshop.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;   // ← 이걸로 교체
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

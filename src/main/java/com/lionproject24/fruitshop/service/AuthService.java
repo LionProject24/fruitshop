@@ -13,7 +13,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.transaction.Transactional;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ import com.lionproject24.fruitshop.exception.CustomException;
 
 @Service
 @RequiredArgsConstructor
-@Builder
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

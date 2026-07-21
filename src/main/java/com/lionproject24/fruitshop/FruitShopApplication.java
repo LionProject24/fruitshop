@@ -1,4 +1,4 @@
-package com.example.fruitshop;
+package com.lionproject24.fruitshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

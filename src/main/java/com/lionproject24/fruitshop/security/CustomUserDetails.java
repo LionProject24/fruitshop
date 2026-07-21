@@ -27,7 +27,7 @@ public class CustomUserDetails implements UserDetails {
         this.email = email;
 
         // roleType에서 ROLE_USER 같은 형태로 감싸서 리스트에 담음
-        this.authorities = List.of(new SimpleGrantedAuthority("Role_" + roleType.name()));
+        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + roleType.name()));
     }
 
     // UserDetails 인터페이스엔 없지만, 필요해서 추가한 커스텀 getter
