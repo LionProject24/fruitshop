@@ -1,4 +1,4 @@
-package com.example.fruitshop;
+package com.lionproject24.fruitshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
