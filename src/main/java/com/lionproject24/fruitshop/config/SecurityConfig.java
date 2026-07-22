@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -40,12 +40,11 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenizer, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenizer, customUserDetailsService), ExceptionTranslationFilter.class)
                 .formLogin(form -> form.disable())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(httpBasic -> httpBasic.disable())
-                .cors(cors -> cors.disable())
                 // 인증 실패 시, 우리가 만든 코드 연결하여 처리
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(customAuthenticationEntryPoint)
