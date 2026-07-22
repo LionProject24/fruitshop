@@ -65,6 +65,13 @@ public class AuthService {
         String refreshToken = jwtTokenizer.createRefreshToken(
                 user.getId(), user.getEmail(), user.getName(), user.getUsername());
 
+        // 4. refreshToken을 DB에 저장 (재발급 검증용)
+        RefreshToken refreshTokenEntity = RefreshToken.builder()
+                .userId(user.getId())
+                .token(refreshToken)
+                .build();
+        refreshTokenService.addRefreshToken(refreshTokenEntity);
+
         return new LoginResponseDto(accessToken, refreshToken);
     }
 

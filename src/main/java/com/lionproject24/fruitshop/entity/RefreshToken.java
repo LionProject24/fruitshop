@@ -1,13 +1,15 @@
 package com.lionproject24.fruitshop.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "refresh_tokens")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor // Builder 사용을 하기 위함.
+@Builder // AuthService에서 객채 만들기 위해 사용.
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
