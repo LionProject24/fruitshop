@@ -32,12 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.debug("사용자 정보 로드 완료");
 
         // Security가 이해하는 CustomUserDetails 객체로 변환해서 리턴
-        return CustomUserDetails.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .name(user.getName())
-                .email(user.getEmail())
-                .roleType(user.getRoleType())
-                .build();
+        // User 엔티티를 그대로 넘기기만 하면 됨 (필드 하나하나 복사할 필요 없음)
+        return new CustomUserDetails(user);
     }
 }
