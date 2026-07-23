@@ -2,6 +2,7 @@ package com.lionproject24.fruitshop.controller;
 
 import com.lionproject24.fruitshop.dto.CartItemRequestDto;
 import com.lionproject24.fruitshop.dto.CartItemResponseDto;
+import com.lionproject24.fruitshop.dto.CartItemUpdateRequestDto;
 import com.lionproject24.fruitshop.security.CustomUserDetails;
 import com.lionproject24.fruitshop.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +40,7 @@ public class CartController {
     @Operation(summary = "장바구니 변경")
     @PutMapping("/{id}")
     public ResponseEntity<CartItemResponseDto> updateCartItem(@PathVariable Long id,
-                                                              @Valid @RequestBody CartItemRequestDto dto,
+                                                              @Valid @RequestBody CartItemUpdateRequestDto dto,
                                                               @AuthenticationPrincipal CustomUserDetails details) {
         return ResponseEntity.ok(cartService.updateCartItem(id, dto, details.getUser()));
     }

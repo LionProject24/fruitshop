@@ -2,6 +2,7 @@ package com.lionproject24.fruitshop.service;
 
 import com.lionproject24.fruitshop.dto.CartItemRequestDto;
 import com.lionproject24.fruitshop.dto.CartItemResponseDto;
+import com.lionproject24.fruitshop.dto.CartItemUpdateRequestDto;
 import com.lionproject24.fruitshop.entity.Cart;
 import com.lionproject24.fruitshop.entity.CartItem;
 import com.lionproject24.fruitshop.entity.Product;
@@ -82,7 +83,7 @@ public class CartService {
 
     // 3. 장바구니 수정 - id로 찾고 본인 확인 후 변경
     @Transactional
-    public CartItemResponseDto updateCartItem(Long cartItemId, CartItemRequestDto dto, User user) {
+    public CartItemResponseDto updateCartItem(Long cartItemId, CartItemUpdateRequestDto dto, User user) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new CustomException(ErrorCode.CART_ITEM_NOT_FOUND));
 
