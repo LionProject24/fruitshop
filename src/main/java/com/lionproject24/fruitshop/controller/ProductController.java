@@ -4,6 +4,7 @@ import com.lionproject24.fruitshop.dto.ProductRequestDto;
 import com.lionproject24.fruitshop.dto.ProductResponseDto;
 import com.lionproject24.fruitshop.security.CustomUserDetails;
 import com.lionproject24.fruitshop.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ public class ProductController {
     private final ProductService productService;
 
     // 1. 상품 등록
+    @Operation(summary = "상품 등록")
     @PostMapping
     public ResponseEntity<ProductResponseDto> add(@Valid @RequestBody ProductRequestDto dto,
                                                   @AuthenticationPrincipal CustomUserDetails details) {
@@ -32,6 +34,7 @@ public class ProductController {
     }
 
     // 2. 전체조회 -- swagger 테스트에서 sort 때문에 계속 오류나서 따로따로 파라미터로 받게함
+    @Operation(summary = "상품 전체조회")
     @GetMapping
     public ResponseEntity<Page<ProductResponseDto>> getList(
             @RequestParam(defaultValue = "0") int page,
@@ -41,18 +44,21 @@ public class ProductController {
     }
 
     // 3-1. id로 조회
+    @Operation(summary = "상품 ID조회")
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDto> getProduct(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProduct(id));
     }
 
     // 3-2. 이름으로 조회
+    @Operation(summary = "상품 이름조회")
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDto>> searchProduct(@RequestParam String name) {
         return ResponseEntity.ok(productService.searchProduct(name));
     }
 
     // 4. 수정
+    @Operation(summary = "상품 수정")
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id,
                                                             @Valid @RequestBody ProductRequestDto dto,
@@ -61,6 +67,7 @@ public class ProductController {
     }
 
     // 5. 삭제
+    @Operation(summary = "상품 삭제")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id,
                                          @AuthenticationPrincipal CustomUserDetails details) {
