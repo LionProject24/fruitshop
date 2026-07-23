@@ -2,10 +2,9 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.16'
     id 'io.spring.dependency-management' version '1.1.7'
-//    id 'com.vaadin' version '25.1.8'
 }
 
-group = 'com.example'
+group = 'com.lionproject24'
 version = '0.0.1-SNAPSHOT'
 description = 'fruit-shop'
 
@@ -18,10 +17,6 @@ java {
 repositories {
     mavenCentral()
 }
-
-//ext {
-//    set('vaadinVersion', "25.1.8")
-//}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'    // DB 연동
@@ -47,11 +42,6 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-//dependencyManagement {
-//    imports {
-//        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
-//    }
-//}
 
 tasks.named('test') {
     useJUnitPlatform()

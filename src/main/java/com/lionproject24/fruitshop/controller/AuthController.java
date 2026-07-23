@@ -2,11 +2,14 @@ package com.lionproject24.fruitshop.controller;
 
 import com.lionproject24.fruitshop.dto.LoginRequestDto;
 import com.lionproject24.fruitshop.dto.LoginResponseDto;
+import com.lionproject24.fruitshop.dto.LogoutRequestDto;
 import com.lionproject24.fruitshop.dto.SignupRequestDto;
 import com.lionproject24.fruitshop.exception.CustomException;
 import com.lionproject24.fruitshop.exception.ErrorCode;
 import com.lionproject24.fruitshop.service.AuthService;
+import com.lionproject24.fruitshop.service.RefreshTokenService;
 import com.lionproject24.fruitshop.util.JwtTokenizer;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,10 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
     // 쿠키 만료 시간
     private final JwtTokenizer jwtTokenizer;
 
     // 회원가입 API
+    @Operation(summary = "회원가입")
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody SignupRequestDto requestDto){
         authService.signup(requestDto);
@@ -35,6 +40,7 @@ public class AuthController {
     }
 
     // 로그인 API
+    @Operation(summary = "로그인")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto,
                                                   HttpServletResponse response){
@@ -50,7 +56,15 @@ public class AuthController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @Operation(summary = "로그아웃")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@Valid @RequestBody LogoutRequestDto dto) {
+        refreshTokenService.deleteRefreshToken(dto.getRefreshToken());
+        return ResponseEntity.ok("로그아웃 완료");
+    }
+
     // Access Token 재발급 API
+    @Operation(summary = "토큰 재발급")
     @PostMapping("/refresh")
     public ResponseEntity<LoginResponseDto> refresh(HttpServletRequest request, HttpServletResponse response){
 

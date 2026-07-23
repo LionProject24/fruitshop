@@ -20,16 +20,16 @@ public enum ErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED,"유효하지 않은 토큰입니다."),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED,"기간이 만료된 토큰입니다. 다시 로그인해주세요."),
     UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED,"지원하지 않는 토큰 형식입니다."),
-    INVALID_INPUT(HttpStatus.BAD_REQUEST, "요청 값 검증에 실패했습니다.");
+    INVALID_INPUT(HttpStatus.BAD_REQUEST, "요청 값 검증에 실패했습니다."),
 
     // Product
-//    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
-//    PRODUCT_FORBIDDEN(HttpStatus.FORBIDDEN, "본인 상품만 수정/삭제 가능합니다."),
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
+    PRODUCT_FORBIDDEN(HttpStatus.FORBIDDEN, "본인 상품만 수정/삭제 가능합니다."),
 
     // Cart
-//    CART_NOT_FOUND(HttpStatus.NOT_FOUND, "장바구니가 없습니다."),
-//    CART_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "장바구니 상품을 찾을 수 없습니다."),
-//    CART_FORBIDDEN(HttpStatus.FORBIDDEN, "본인 장바구니만 수정/삭제 가능합니다.")
+    CART_NOT_FOUND(HttpStatus.NOT_FOUND, "장바구니가 없습니다."),
+    CART_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "장바구니 상품을 찾을 수 없습니다."),
+    CART_FORBIDDEN(HttpStatus.FORBIDDEN, "본인 장바구니만 수정/삭제 가능합니다.");
 
     private final HttpStatus status;
     private final String message;
