@@ -31,4 +31,10 @@ public class RefreshTokenService {
         refreshTokenRepository.findByToken(refreshToken)
                 .ifPresent(refreshTokenRepository::delete); // 있으면 삭제, 없으면 아무것도 안함
     }
+
+    // 삭제 - 로그인 시 기존 토큰 정리 (중복 로그인 방지) 해당유저의 모든 토큰 싹 다 삭제
+    @Transactional
+    public void deleteAllByUserId(Long userId){
+        refreshTokenRepository.deleteAllByUserId(userId);
+    }
 }

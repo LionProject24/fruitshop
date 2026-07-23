@@ -23,7 +23,8 @@ public class Cart {
     private LocalDateTime createdAt;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    //유저가 장바구니가 없는 상태에서 거의 동시에 두 번 요청 방지 unique추가
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
     @OneToMany(mappedBy = "cart")

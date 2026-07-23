@@ -65,6 +65,9 @@ public class AuthService {
         String refreshToken = jwtTokenizer.createRefreshToken(
                 user.getId(), user.getEmail(), user.getName(), user.getUsername());
 
+        // 4-0. 기존에 저장된 refreshToken이 있으면 먼저 삭제 (중복 로그인 방지)
+        refreshTokenService.deleteAllByUserId(user.getId());
+
         // 4. refreshToken을 DB에 저장 (재발급 검증용)
         RefreshToken refreshTokenEntity = RefreshToken.builder()
                 .userId(user.getId())

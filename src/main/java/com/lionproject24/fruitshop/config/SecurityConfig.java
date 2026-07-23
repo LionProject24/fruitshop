@@ -40,7 +40,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenizer, customUserDetailsService), ExceptionTranslationFilter.class)
+                //기존 addFilterBefore 였으나 After로 고침.
+                .addFilterAfter(new JwtAuthenticationFilter(jwtTokenizer, customUserDetailsService), ExceptionTranslationFilter.class)
                 .formLogin(form -> form.disable())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

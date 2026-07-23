@@ -2,10 +2,12 @@ package com.lionproject24.fruitshop.controller;
 
 import com.lionproject24.fruitshop.dto.LoginRequestDto;
 import com.lionproject24.fruitshop.dto.LoginResponseDto;
+import com.lionproject24.fruitshop.dto.LogoutRequestDto;
 import com.lionproject24.fruitshop.dto.SignupRequestDto;
 import com.lionproject24.fruitshop.exception.CustomException;
 import com.lionproject24.fruitshop.exception.ErrorCode;
 import com.lionproject24.fruitshop.service.AuthService;
+import com.lionproject24.fruitshop.service.RefreshTokenService;
 import com.lionproject24.fruitshop.util.JwtTokenizer;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
     // 쿠키 만료 시간
     private final JwtTokenizer jwtTokenizer;
 
@@ -51,6 +54,13 @@ public class AuthController {
 
         // 3. 응답 body에도 토큰/유저 정보를 같이 내려줌
         return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation(summary = "로그아웃")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody LogoutRequestDto dto) {
+        refreshTokenService.deleteRefreshToken(dto.getRefreshToken());
+        return ResponseEntity.ok("로그아웃 완료");
     }
 
     // Access Token 재발급 API

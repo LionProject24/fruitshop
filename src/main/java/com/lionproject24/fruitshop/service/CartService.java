@@ -12,6 +12,7 @@ import com.lionproject24.fruitshop.repository.CartItemRepository;
 import com.lionproject24.fruitshop.repository.CartRepository;
 import com.lionproject24.fruitshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +33,7 @@ public class CartService {
     public CartItemResponseDto addCart(CartItemRequestDto dto, User user) {
 
         // 1-1. 유저로 Cart 찾기 (없으면 새로 만들기)
-        Cart cart = cartRepository.findByUser(user).orElseGet(() ->
-                cartRepository.save(Cart.builder().user(user).build()));
+        Cart cart = getOrCreateCart(user);
 
         // 1-2. productId로 Product 찾기
         Product product = productRepository.findById(dto.getProductId())
@@ -54,6 +54,20 @@ public class CartService {
                 .build();
 
         return CartItemResponseDto.from(cartItemRepository.save(cartItem));
+    }
+
+    // Cart 조회 또는 생성 - 동시 요청으로 인한 중복 생성을 예외처리로 방지
+    private Cart getOrCreateCart(User user) {
+        return cartRepository.findByUser(user)
+                .orElseGet(() -> {
+                    try {
+                        return cartRepository.save(Cart.builder().user(user).build());
+                    } catch (DataIntegrityViolationException e) {
+                        // 동시에 다른 요청이 먼저 Cart를 만든 경우 - 그걸 다시 찾아서 반환
+                        return cartRepository.findByUser(user)
+                                .orElseThrow(() -> new CustomException(ErrorCode.CART_NOT_FOUND));
+                    }
+                });
     }
 
     // 2. 장바구니 조회 - 유저로 카트 찾고 아이템 리스트 반환
