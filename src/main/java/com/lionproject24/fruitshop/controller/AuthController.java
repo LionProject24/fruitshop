@@ -58,7 +58,7 @@ public class AuthController {
 
     @Operation(summary = "로그아웃")
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody LogoutRequestDto dto) {
+    public ResponseEntity<String> logout(@Valid @RequestBody LogoutRequestDto dto) {
         refreshTokenService.deleteRefreshToken(dto.getRefreshToken());
         return ResponseEntity.ok("로그아웃 완료");
     }
