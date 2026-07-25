@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: fruit-shop
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/fruitshop
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  # Access Token 서명용 비밀키 (랜덤 생성, 최소 32바이트 이상 권장)
+  secretKey: "MAFCPtab2K7eLhW5oOXPnCQOqzeD1rs9b1O9mRDAcRA="
+  # Refresh Token 서명용 비밀키 (secretKey와 다른 값 사용 - 하나가 유출돼도 다른 하나는 안전하도록)
+  refreshKey: "39Mi/4xYqJuoNUvRVd+Nm8+SnjscMCOguulSpwmLJgA="
+  # Access Token 유효기간 (밀리초 단위) - 1000ms * 60초 * 30분 = 30분
+  access-expiration-ms: 1800000
+  # Refresh Token 유효기간 (밀리초 단위) - 1000ms * 60초 * 60분 * 24시간 * 7일 = 7일
+  refresh-expiration-ms: 604800000
+
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 5
