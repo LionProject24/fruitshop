@@ -4,49 +4,51 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "payments")
+@Table(name = "orders")
 @Builder
-public class Payment {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "order_id", unique = true)
-    private Order order;
 
-    @Column(nullable = false)
-    private Long amount;
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private User user;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod method;
+    @OneToMany(mappedBy = "order")
+    @Builder.Default
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private PaymentStatus status = PaymentStatus.PENDING;
+    private OrderStatus status = OrderStatus.PENDING;
 
-    private LocalDateTime paidAt;
-
+    @Column(nullable = false)
+    private Long totalPrice;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void prePersist() {
+    public void prePersist(){
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    public void preUpdate() {
+    public void preUpdate(){
         this.updatedAt = LocalDateTime.now();
     }
+
 
 
 }
