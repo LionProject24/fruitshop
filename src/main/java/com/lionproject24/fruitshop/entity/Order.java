@@ -8,42 +8,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Point")
+@Table(name = "orders")
 @Builder
-public class Point {
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @OneToMany(mappedBy = "order")
+    @Builder.Default
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private PointType pointType;
+    @Builder.Default
+    private OrderStatus status = OrderStatus.PENDING;
 
     @Column(nullable = false)
-    private Long amount;
-
-    private String reason;
-
-    @ManyToOne
-    @JoinColumn(name = "granted_by")
-    private User grantedBy;
-
+    private Long totalPrice;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void prePersist(){
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt = LocalDateTime.now();
+    }
+
+
 
 }
